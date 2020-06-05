@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::namespace('Admin')->prefix('admin')->group(function () {
+    Route::resource('panel','AdminController');
+    Route::resource('category','CategoryController');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
