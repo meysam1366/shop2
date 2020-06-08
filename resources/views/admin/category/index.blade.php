@@ -38,7 +38,7 @@
                                     @foreach($categories as $key => $category)
                                         <tr>
                                             <td>{{ ++$key }}</td>
-                                            <td>{{ $category->parent['title'] == null ? 'ندارد' : $category->parent['title'] }}</td>
+                                            <td>{{ $category->parent == null ? 'ندارد' : $category->parent['title'] }}</td>
                                             <td>{{ $category->title }}</td>
                                             <td>
                                                 <a href="{{ $category->logoLink() }}" target="_blank">
@@ -54,7 +54,7 @@
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <a href="{{ route('category.show',['category' => $category->id]) }}"
-                                                       class="btn btn-warning btn-sm mr-1">
+                                                       class="btn btn-success btn-sm mr-1">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                     <form
