@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    use Sluggable;
+
     protected $fillable = [
       'parent_id','title','logo','description','sorted','status'
     ];
@@ -22,7 +25,12 @@ class Category extends Model
 
     public function parent()
     {
-        return $this->hasOne(Category::class,'id','parent_id');
+        return $this->belongsTo(Category::class,'parent_id');
+    }
+
+    public function children()
+    {
+        $this->hasMany(Category::class,'parent_id');
     }
 
     public function getCreatedAtAttribute($value)
@@ -31,5 +39,19 @@ class Category extends Model
         $old_date = explode('-',$date[0]);
         $new_date = implode('-',\Morilog\Jalali\CalendarUtils::toJalali($old_date[0],$old_date[1],$old_date[2]));
         return $this->attributes['created_at'] = $new_date;
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }

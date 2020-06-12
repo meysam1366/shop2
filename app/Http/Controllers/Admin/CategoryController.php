@@ -11,12 +11,11 @@ use App\Repositories\BaseModelInterface;
 class CategoryController extends Controller
 {
 
-    protected $categoryRepository;
-    private $direction = "/images/category/";
+    protected $categories;
 
-    public function __construct(BaseModelInterface $categoryRepository)
+    public function __construct(BaseModelInterface $categories)
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->categories = $categories;
     }
 
     /**
@@ -27,7 +26,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->categoryRepository->all();
+        $categories = $this->categories->all();
         return view('admin.category.index',compact('categories'));
     }
 
@@ -38,18 +37,14 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::query()->select('title','id')->get();
+        $categories = $this->categories->create();
         return view('admin.category.create',compact('categories'));
     }
 
     public function store(CategoryRequest $request)
     {
         $validated = $request->validated();
-        $file = $this->uploadImage($request->file('logo'));
-        $validated['logo'] = $file;
-        $validated['parent_id'] = $request->parent_id;
-        Category::query()->create($validated);
-        session()->flash('success','successfully created');
+        $this->categories->store($validated,$request);
         return redirect(route('category.index'));
     }
 
@@ -72,8 +67,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = $this->categoryRepository->find($id);
-        $categories = $this->categoryRepository->all();
+        $category = $this->categories->find($id);
+        $categories = $this->categories->all();
         return view('admin.category.edit',compact('category','categories'));
     }
 
@@ -87,18 +82,7 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, $id)
     {
         $validated = $request->validated();
-        $category = $this->categoryRepository->find($id);
-        if ($request->file('logo')) {
-            $file = $this->uploadImage($request->file('logo'));
-            $validated['logo'] = $file;
-        }else {
-            $file = $category->logo;
-            $validated['logo'] = $file;
-        }
-        $validated['status'] = $request->status ? 1 : 0;
-        $validated['parent_id'] = $request->parent_id;
-        $category->update($validated);
-        session()->flash('success','successfully update');
+        $this->categories->update($validated,$request,$id);
         return redirect(route('category.index'));
     }
 
@@ -110,17 +94,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $this->categoryRepository->destroy($id);
-        session()->flash('success','successfully deleted');
+        $this->categories->destroy($id);
         return redirect(route('category.index'));
-    }
-
-    /**
-     * @param $logo
-     * @return string
-     */
-    private function uploadImage($logo)
-    {
-        return $this->direction.Helper::uploadFile($this->direction,$logo);
     }
 }
