@@ -8,6 +8,9 @@ use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
+    protected $repositories = [
+        BaseModelInterface::class => CategoryRepository::class
+    ];
     /**
      * Register services.
      *
@@ -15,7 +18,9 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(BaseModelInterface::class,CategoryRepository::class);
+        foreach ($this->repositories as $interface => $repository) {
+            $this->app->bind($interface,$repository);
+        }
     }
 
     /**
