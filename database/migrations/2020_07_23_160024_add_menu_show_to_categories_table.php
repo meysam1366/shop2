@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSlugToTableCategories extends Migration
+class AddMenuShowToCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddSlugToTableCategories extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('slug');
+            $table->boolean('menu_show')->default(0);
         });
     }
 
@@ -26,7 +26,7 @@ class AddSlugToTableCategories extends Migration
     public function down()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->dropColumn('slug');
+            $table->dropColumn('menu_show');
         });
     }
 }
