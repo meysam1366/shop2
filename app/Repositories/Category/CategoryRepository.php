@@ -47,6 +47,7 @@ class CategoryRepository implements BaseModelInterface
             $validated['logo'] = $file;
         }
         $validated['status'] = $request->status ? 1 : 0;
+        $validated['menu_show'] = $request->menu_show ? 1 : 0;
         $validated['parent_id'] = $request->parent_id;
         session()->flash('success','successfully update');
         return $category->update($validated);

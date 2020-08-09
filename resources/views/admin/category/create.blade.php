@@ -60,6 +60,11 @@
                                                value="1" data-color="#df3554" data-size="small"/>
                                     </div>
                                     <div class="form-group">
+                                        <label for="menu_show">Menu Show</label>
+                                        <input type="checkbox" checked data-toggle="switchery" id="menu_show" name="menu_show"
+                                               value="1" data-color="#df3554" data-size="small"/>
+                                    </div>
+                                    <div class="form-group">
                                         <input type="submit" class="btn btn-primary" value="Create Category">
                                     </div>
                                 </form>

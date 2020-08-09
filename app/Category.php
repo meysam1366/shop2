@@ -10,7 +10,7 @@ class Category extends Model
     use Sluggable;
 
     protected $fillable = [
-      'parent_id','title','logo','description','sorted','status'
+      'parent_id','title','logo','description','sorted','status','menu_show'
     ];
 
     public function logoLink()

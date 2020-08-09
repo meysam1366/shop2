@@ -67,6 +67,11 @@
                                                value="1" {{ $category->status == 1 ? 'checked' : '' }} data-color="#df3554" data-size="small"/>
                                     </div>
                                     <div class="form-group">
+                                        <label for="menu_show">Menu Show</label>
+                                        <input type="checkbox" data-toggle="switchery" id="menu_show" name="menu_show"
+                                               value="1" {{ $category->menu_show == 1 ? 'checked' : '' }} data-color="#df3554" data-size="small"/>
+                                    </div>
+                                    <div class="form-group">
                                         <input type="submit" class="btn btn-primary" value="Update Category">
                                     </div>
                                 </form>
