@@ -41,11 +41,10 @@ class CategoryRepository implements BaseModelInterface
         $category = $this->model()->find($id);
         if ($request->file('logo')) {
             $file = $this->uploadImage($request->file('logo'));
-            $validated['logo'] = $file;
         }else {
             $file = $category->logo;
-            $validated['logo'] = $file;
         }
+        $validated['logo'] = $file;
         $validated['status'] = $request->status ? 1 : 0;
         $validated['menu_show'] = $request->menu_show ? 1 : 0;
         $validated['parent_id'] = $request->parent_id;

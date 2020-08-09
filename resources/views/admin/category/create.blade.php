@@ -52,7 +52,9 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Description</label>
-                                        <textarea name="description" id="description" cols="100" rows="20"></textarea>
+                                        <textarea name="description" id="description" cols="100" rows="20">
+                                            {{ old('description') }}
+                                        </textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="status">Status</label>
